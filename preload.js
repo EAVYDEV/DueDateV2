@@ -1,14 +1,10 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector);
-    if (element) {
-      element.innerText = text;
-    } else {
-      console.error(`Element with id '${selector}' not found`);
-    }
-  };
+const { contextBridge } = require('electron');
+require('dotenv').config();
+const QuickBase = require('quickbase');
 
-  ['chrome', 'node', 'electron'].forEach(dependency => {
-    replaceText(`${dependency}-version`, process.versions[dependency]);
-  });
+contextBridge.exposeInMainWorld('api', {
+  initializeQuickBase: (token) => new QuickBase({ realm: 'awnexinc', userToken: token }),
+  getEnvironmentVariables: () => ({
+    QB_USER_TOKEN: process.env.QB_USER_TOKEN,
+  }),
 });

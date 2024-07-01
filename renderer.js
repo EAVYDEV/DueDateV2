@@ -1,5 +1,3 @@
-const QuickBase = require('quickbase');
-
 let quickbase;
 let currentLink = '';
 let historyStack = [];
@@ -11,19 +9,12 @@ function handleClientLoad() {
   toggleLoadingSpinner(true);
   const qbToken = localStorage.getItem('qbToken');
   if (qbToken) {
-    initializeQuickBase(qbToken);
+    quickbase = window.api.initializeQuickBase(qbToken);
     loadQuickbaseData();
   } else {
     handleError('Quickbase token not found. Please set it in the settings.');
     toggleLoadingSpinner(false);
   }
-}
-
-function initializeQuickBase(token) {
-  quickbase = new QuickBase({
-    realm: 'awnexinc',
-    userToken: token
-  });
 }
 
 async function loadQuickbaseData() {
@@ -231,7 +222,7 @@ function saveSettings() {
   }
   if (qbTokenInput) {
     localStorage.setItem('qbToken', qbTokenInput);
-    initializeQuickBase(qbTokenInput);
+    quickbase = window.api.initializeQuickBase(qbTokenInput);
   } else {
     alert('Please enter a valid Quickbase token.');
     return;
