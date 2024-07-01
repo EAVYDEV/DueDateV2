@@ -295,3 +295,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Ensure toggleSettings is globally accessible
 window.toggleSettings = toggleSettings;
+
+function loadSheetData() {
+  console.log('Loading sheet data...');
+  loadQuickbaseData();
+}
