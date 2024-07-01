@@ -205,8 +205,11 @@ function handleTouchEnd(evt) {
 }
 
 function goToSettings() {
-  document.getElementById('settings-page').classList.remove('hidden');
-  document.getElementById('main-content').classList.add('hidden');
+  console.log('Opening settings page...');
+  const settingsPage = document.getElementById('settings-page');
+  const mainContent = document.getElementById('main-content');
+  settingsPage.classList.remove('hidden');
+  mainContent.classList.add('hidden');
   const savedUrl = localStorage.getItem('qcUrl');
   const savedToken = localStorage.getItem('qbToken');
   if (savedUrl) {
@@ -238,8 +241,11 @@ function saveSettings() {
 }
 
 function returnToMain() {
-  document.getElementById('settings-page').classList.add('hidden');
-  document.getElementById('main-content').classList.remove('hidden');
+  console.log('Returning to main page...');
+  const settingsPage = document.getElementById('settings-page');
+  const mainContent = document.getElementById('main-content');
+  settingsPage.classList.add('hidden');
+  mainContent.classList.remove('hidden');
 }
 
 function goToAddQC() {
@@ -262,6 +268,7 @@ function handleError(message, error) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('Document loaded.');
   handleClientLoad();
   addTouchSupport();
   document.getElementById('search-input').addEventListener('input', filterProjects);
