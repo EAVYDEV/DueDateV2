@@ -1,3 +1,6 @@
+const bugsnag = require('@bugsnag/js');
+const bugsnagClient = bugsnag('YOUR_VALID_API_KEY'); // Replace with your valid API key
+
 let quickbase;
 let currentLink = '';
 let historyStack = [];
