@@ -293,3 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
   addTouchSupport();
   document.getElementById('search-input').addEventListener('input', filterProjects);
 });
+
+// Ensure toggleSettings is globally accessible
+window.toggleSettings = toggleSettings;
