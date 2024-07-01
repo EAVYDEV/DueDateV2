@@ -199,14 +199,27 @@ function goToSettings() {
   console.log('Opening settings page...');
   const settingsIframe = document.getElementById('settings-iframe');
   settingsIframe.src = 'settings.html';
+  settingsIframe.onload = () => {
+    console.log('Settings page loaded.');
+    const iframeDoc = settingsIframe.contentDocument || settingsIframe.contentWindow.document;
+    const savedUrl = localStorage.getItem('qcUrl');
+    const savedToken = localStorage.getItem('qbToken');
+    if (savedUrl) {
+      iframeDoc.getElementById('qc-url-input').value = savedUrl;
+    }
+    if (savedToken) {
+      iframeDoc.getElementById('qb-token-input').value = savedToken;
+    }
+  };
   document.getElementById('main-content').style.display = 'none';
   settingsIframe.classList.remove('hidden');
-  settingsIframe.classList.add('visible');
 }
 
 function saveSettings() {
-  const qcUrlInput = document.getElementById('qc-url-input').value;
-  const qbTokenInput = document.getElementById('qb-token-input').value;
+  const settingsIframe = document.getElementById('settings-iframe');
+  const iframeDoc = settingsIframe.contentDocument || settingsIframe.contentWindow.document;
+  const qcUrlInput = iframeDoc.getElementById('qc-url-input').value;
+  const qbTokenInput = iframeDoc.getElementById('qb-token-input').value;
   if (isValidUrl(qcUrlInput)) {
     localStorage.setItem('qcUrl', qcUrlInput);
   } else {
@@ -228,7 +241,6 @@ function returnToMain() {
   console.log('Returning to main page...');
   const settingsIframe = document.getElementById('settings-iframe');
   settingsIframe.classList.add('hidden');
-  settingsIframe.classList.remove('visible');
   document.getElementById('main-content').style.display = 'block';
 }
 
