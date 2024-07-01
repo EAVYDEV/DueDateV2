@@ -197,24 +197,11 @@ function handleTouchEnd(evt) {
 
 function goToSettings() {
   console.log('Opening settings page...');
-  fetch('settings.html')
-    .then(response => response.text())
-    .then(data => {
-      console.log('Settings page content loaded:', data);
-      document.getElementById('settings-content').innerHTML = data;
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('settings-content').style.display = 'block';
-
-      const savedUrl = localStorage.getItem('qcUrl');
-      const savedToken = localStorage.getItem('qbToken');
-      if (savedUrl) {
-        document.getElementById('qc-url-input').value = savedUrl;
-      }
-      if (savedToken) {
-        document.getElementById('qb-token-input').value = savedToken;
-      }
-    })
-    .catch(error => console.error('Error loading settings page:', error));
+  const settingsIframe = document.getElementById('settings-iframe');
+  settingsIframe.src = 'settings.html';
+  document.getElementById('main-content').style.display = 'none';
+  settingsIframe.classList.remove('hidden');
+  settingsIframe.classList.add('visible');
 }
 
 function saveSettings() {
@@ -239,7 +226,9 @@ function saveSettings() {
 
 function returnToMain() {
   console.log('Returning to main page...');
-  document.getElementById('settings-content').style.display = 'none';
+  const settingsIframe = document.getElementById('settings-iframe');
+  settingsIframe.classList.add('hidden');
+  settingsIframe.classList.remove('visible');
   document.getElementById('main-content').style.display = 'block';
 }
 
