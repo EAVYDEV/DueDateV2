@@ -215,20 +215,16 @@ function goToSettings() {
   settingsIframe.classList.remove('hidden');
 }
 
-function saveSettings() {
-  const settingsIframe = document.getElementById('settings-iframe');
-  const iframeDoc = settingsIframe.contentDocument || settingsIframe.contentWindow.document;
-  const qcUrlInput = iframeDoc.getElementById('qc-url-input').value;
-  const qbTokenInput = iframeDoc.getElementById('qb-token-input').value;
-  if (isValidUrl(qcUrlInput)) {
-    localStorage.setItem('qcUrl', qcUrlInput);
+function saveSettings(qcUrl, qbToken) {
+  if (isValidUrl(qcUrl)) {
+    localStorage.setItem('qcUrl', qcUrl);
   } else {
     alert('Please enter a valid URL.');
     return;
   }
-  if (qbTokenInput) {
-    localStorage.setItem('qbToken', qbTokenInput);
-    quickbase = window.api.initializeQuickBase(qbTokenInput);
+  if (qbToken) {
+    localStorage.setItem('qbToken', qbToken);
+    quickbase = window.api.initializeQuickBase(qbToken);
   } else {
     alert('Please enter a valid Quickbase token.');
     return;
@@ -262,6 +258,15 @@ function handleError(message, error) {
   alert(`${message}. Please check the console for more details.`);
   toggleLoadingSpinner(false);
 }
+
+window.addEventListener('message', (event) => {
+  const { action, qcUrl, qbToken } = event.data;
+  if (action === 'saveSettings') {
+    saveSettings(qcUrl, qbToken);
+  } else if (action === 'returnToMain') {
+    returnToMain();
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Document loaded.');

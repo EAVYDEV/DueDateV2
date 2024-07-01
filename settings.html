@@ -1,9 +1,35 @@
-<div id="settings-page">
-  <h2>Settings</h2>
-  <label for="qc-url-input">QC URL:</label>
-  <input type="text" id="qc-url-input" placeholder="Enter QC URL">
-  <label for="qb-token-input">Quickbase Token:</label>
-  <input type="text" id="qb-token-input" placeholder="Enter Quickbase Token">
-  <button onclick="saveSettings()">Save</button>
-  <button onclick="returnToMain()">Back</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+</head>
+<body>
+  <div id="settings-page">
+    <h2>Settings</h2>
+    <label for="qc-url-input">QC URL:</label>
+    <input type="text" id="qc-url-input" placeholder="Enter QC URL">
+    <label for="qb-token-input">Quickbase Token:</label>
+    <input type="text" id="qb-token-input" placeholder="Enter Quickbase Token">
+    <button onclick="saveSettings()">Save</button>
+    <button onclick="returnToMain()">Back</button>
+  </div>
+
+  <script>
+    function saveSettings() {
+      const qcUrlInput = document.getElementById('qc-url-input').value;
+      const qbTokenInput = document.getElementById('qb-token-input').value;
+      if (!qcUrlInput || !qbTokenInput) {
+        alert('Please fill in both fields.');
+        return;
+      }
+      parent.postMessage({ action: 'saveSettings', qcUrl: qcUrlInput, qbToken: qbTokenInput }, '*');
+    }
+
+    function returnToMain() {
+      parent.postMessage({ action: 'returnToMain' }, '*');
+    }
+  </script>
+</body>
+</html>
