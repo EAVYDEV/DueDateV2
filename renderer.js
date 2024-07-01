@@ -200,6 +200,7 @@ function goToSettings() {
   fetch('settings.html')
     .then(response => response.text())
     .then(data => {
+      console.log('Settings page content loaded:', data);
       document.getElementById('settings-content').innerHTML = data;
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('settings-content').style.display = 'block';
@@ -212,7 +213,8 @@ function goToSettings() {
       if (savedToken) {
         document.getElementById('qb-token-input').value = savedToken;
       }
-    });
+    })
+    .catch(error => console.error('Error loading settings page:', error));
 }
 
 function saveSettings() {
