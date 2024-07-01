@@ -199,8 +199,10 @@ function goToSettings() {
   console.log('Opening settings page...');
   const settingsPage = document.getElementById('settings-page');
   const mainContent = document.getElementById('main-content');
+  console.log('settingsPage:', settingsPage, 'mainContent:', mainContent);
   settingsPage.classList.remove('hidden');
   mainContent.classList.add('hidden');
+  console.log('settingsPage classList:', settingsPage.classList, 'mainContent classList:', mainContent.classList);
   const savedUrl = localStorage.getItem('qcUrl');
   const savedToken = localStorage.getItem('qbToken');
   if (savedUrl) {
@@ -235,8 +237,10 @@ function returnToMain() {
   console.log('Returning to main page...');
   const settingsPage = document.getElementById('settings-page');
   const mainContent = document.getElementById('main-content');
+  console.log('settingsPage:', settingsPage, 'mainContent:', mainContent);
   settingsPage.classList.add('hidden');
   mainContent.classList.remove('hidden');
+  console.log('settingsPage classList:', settingsPage.classList, 'mainContent classList:', mainContent.classList);
 }
 
 function goToAddQC() {
