@@ -1,6 +1,3 @@
-const bugsnag = require('@bugsnag/js');
-const bugsnagClient = bugsnag('YOUR_VALID_API_KEY'); // Replace with your valid API key
-
 let quickbase;
 let currentLink = '';
 let historyStack = [];
@@ -30,19 +27,24 @@ function handleClientLoad() {
 async function loadQuickbaseData() {
   console.log('Loading Quickbase data...');
   toggleLoadingSpinner(true);
+
   try {
     const response = await quickbase.api('API_DoQuery', {
       dbid: 'bfirp7cdp', // Replace with your table ID
-      query: "{3.EX.'Value'}", // Replace with your query criteria
-      clist: "3.6.7.8.9.10.11.12.13", // Replace with your field IDs
+      query: "{3.EX.'Value'}", // Adjust the query criteria as needed
+      clist: "41.794.746.748.723.378", // List of your field IDs
       options: {
-        fmt: 'structured'
+        fmt: 'structured' // Format the response in a structured format
       }
     });
 
+    console.log('Quickbase data loaded:', response);
     displaySheetData(response.data);
   } catch (error) {
+    console.error('Error loading Quickbase data:', error);
     handleError('Failed to fetch data from Quickbase', error);
+  } finally {
+    toggleLoadingSpinner(false);
   }
 }
 
@@ -64,16 +66,24 @@ function displaySheetData(data) {
 }
 
 function createProjectCard(row, currentDate) {
-  const [orderNumber, name, fabDue, zone, scope, am, qcNotes, link, drawingsLink, qcReady] = row;
+  const [orderNumber, orderName, fabDue, zone, scope, am] = row;
   const fabDueDate = parseDate(fabDue);
   const isPastDue = fabDueDate && fabDueDate < currentDate;
   const card = document.createElement('div');
   card.className = `project-card ${isPastDue ? 'red' : 'orange'}`;
   if (fabDueDate) card.setAttribute('data-date', fabDueDate.toISOString().split('T')[0]);
-  if (qcReady && qcReady.toLowerCase() === 'yes') card.style.border = '10px solid rgba(255, 0, 0, 0.75)';
-  card.innerHTML = generateCardHTML(orderNumber, name, fabDue, zone, scope, am, qcNotes, link, drawingsLink, qcReady);
-  if (isValidUrl(link)) card.addEventListener('click', () => openLink(link, card));
-  return { card, qcReady };
+  card.innerHTML = generateCardHTML(orderNumber, orderName, fabDue, zone, scope, am);
+  return { card };
+}
+
+function generateCardHTML(orderNumber, orderName, fabDue, zone, scope, am) {
+  return `
+    <div class="order-info">${orderNumber} - ${orderName}</div>
+    <div><b>Fab Due:</b> ${fabDue}</div>
+    <div><b>Zone:</b> ${zone}</div>
+    <div><b>Scope:</b> ${scope}</div>
+    <div><b>AM:</b> ${am}</div>
+  `;
 }
 
 function parseDate(dateString) {
@@ -81,21 +91,7 @@ function parseDate(dateString) {
   return isNaN(date.getTime()) ? null : date;
 }
 
-function generateCardHTML(orderNumber, name, fabDue, zone, scope, am, qcNotes, link, drawingsLink, qcReady) {
-  return `
-    <div class="order-info">${orderNumber} - ${name}</div>
-    <div><b>Fab Due:</b> ${fabDue}</div>
-    <div><b>Zone:</b> ${zone}</div>
-    <div><b>Scope:</b> ${scope}</div>
-    <div><b>AM:</b> ${am}</div>
-    ${qcReady && qcReady.toLowerCase() === 'yes' ? `<div><b>QC Notes:</b> ${qcNotes}</div>` : ''}
-    ${isValidUrl(drawingsLink) ? `<div><a href="#" onclick="openLink('${drawingsLink}'); return false;">View Drawings</a></div>` : ''}
-  `;
-}
-
 function sortProjectCards(a, b) {
-  if (a.qcReady && a.qcReady.toLowerCase() === 'yes' && (!b.qcReady || b.qcReady.toLowerCase() !== 'yes')) return -1;
-  if (b.qcReady && b.qcReady.toLowerCase() === 'yes' && (!a.qcReady || a.qcReady.toLowerCase() !== 'yes')) return 1;
   return new Date(a.card.getAttribute('data-date')) - new Date(b.card.getAttribute('data-date'));
 }
 
