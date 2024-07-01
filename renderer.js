@@ -196,24 +196,32 @@ function handleTouchEnd(evt) {
   touchStartX = null;
 }
 
-function goToSettings() {
-  console.log('Opening settings page...');
+function toggleSettings() {
   const settingsIframe = document.getElementById('settings-iframe');
-  settingsIframe.src = 'settings.html';
-  settingsIframe.onload = () => {
-    console.log('Settings page loaded.');
-    const iframeDoc = settingsIframe.contentDocument || settingsIframe.contentWindow.document;
-    const savedUrl = localStorage.getItem('qcUrl');
-    const savedToken = localStorage.getItem('qbToken');
-    if (savedUrl) {
-      iframeDoc.getElementById('qc-url-input').value = savedUrl;
-    }
-    if (savedToken) {
-      iframeDoc.getElementById('qb-token-input').value = savedToken;
-    }
-  };
-  document.getElementById('main-content').style.display = 'none';
-  settingsIframe.classList.remove('hidden');
+  const mainContent = document.getElementById('main-content');
+  
+  if (settingsIframe.classList.contains('hidden')) {
+    console.log('Opening settings page...');
+    settingsIframe.src = 'settings.html';
+    settingsIframe.onload = () => {
+      console.log('Settings page loaded.');
+      const iframeDoc = settingsIframe.contentDocument || settingsIframe.contentWindow.document;
+      const savedUrl = localStorage.getItem('qcUrl');
+      const savedToken = localStorage.getItem('qbToken');
+      if (savedUrl) {
+        iframeDoc.getElementById('qc-url-input').value = savedUrl;
+      }
+      if (savedToken) {
+        iframeDoc.getElementById('qb-token-input').value = savedToken;
+      }
+    };
+    mainContent.style.display = 'none';
+    settingsIframe.classList.remove('hidden');
+  } else {
+    console.log('Closing settings page...');
+    settingsIframe.classList.add('hidden');
+    mainContent.style.display = 'block';
+  }
 }
 
 function saveSettings(qcUrl, qbToken) {
