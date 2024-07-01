@@ -200,9 +200,19 @@ function goToSettings() {
   const settingsPage = document.getElementById('settings-page');
   const mainContent = document.getElementById('main-content');
   console.log('settingsPage:', settingsPage, 'mainContent:', mainContent);
+  
+  // Log initial classes
+  console.log('Initial settingsPage classList:', settingsPage.classList);
+  console.log('Initial mainContent classList:', mainContent.classList);
+
+  // Remove hidden class from settingsPage and add it to mainContent
   settingsPage.classList.remove('hidden');
   mainContent.classList.add('hidden');
-  console.log('settingsPage classList:', settingsPage.classList, 'mainContent classList:', mainContent.classList);
+
+  // Log updated classes
+  console.log('Updated settingsPage classList:', settingsPage.classList);
+  console.log('Updated mainContent classList:', mainContent.classList);
+
   const savedUrl = localStorage.getItem('qcUrl');
   const savedToken = localStorage.getItem('qbToken');
   if (savedUrl) {
@@ -238,9 +248,18 @@ function returnToMain() {
   const settingsPage = document.getElementById('settings-page');
   const mainContent = document.getElementById('main-content');
   console.log('settingsPage:', settingsPage, 'mainContent:', mainContent);
+  
+  // Log initial classes
+  console.log('Initial settingsPage classList:', settingsPage.classList);
+  console.log('Initial mainContent classList:', mainContent.classList);
+
+  // Add hidden class to settingsPage and remove it from mainContent
   settingsPage.classList.add('hidden');
   mainContent.classList.remove('hidden');
-  console.log('settingsPage classList:', settingsPage.classList, 'mainContent classList:', mainContent.classList);
+
+  // Log updated classes
+  console.log('Updated settingsPage classList:', settingsPage.classList);
+  console.log('Updated mainContent classList:', mainContent.classList);
 }
 
 function goToAddQC() {
