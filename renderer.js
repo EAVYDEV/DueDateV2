@@ -7,6 +7,12 @@ let activeCard = null;
 function handleClientLoad() {
   console.log('Loading Quickbase client...');
   toggleLoadingSpinner(true);
+  if (!window.api || !window.api.initializeQuickBase) {
+    console.error('window.api or window.api.initializeQuickBase is not defined.');
+    toggleLoadingSpinner(false);
+    return;
+  }
+
   const qbToken = localStorage.getItem('qbToken');
   console.log('Loaded Quickbase token:', qbToken);  // Debug statement
   if (qbToken) {
