@@ -220,6 +220,7 @@ function saveSettings(qcUrl, qbToken) {
   console.log('Saving settings in parent:', { qcUrl, qbToken });  // Debug statement
   if (isValidUrl(qcUrl)) {
     localStorage.setItem('qcUrl', qcUrl);
+    console.log('QC URL saved to local storage:', qcUrl);  // Debug statement
   } else {
     alert('Please enter a valid URL.');
     return;
@@ -227,6 +228,7 @@ function saveSettings(qcUrl, qbToken) {
   if (qbToken) {
     localStorage.setItem('qbToken', qbToken);
     quickbase = window.api.initializeQuickBase(qbToken);
+    console.log('Quickbase token saved to local storage:', qbToken);  // Debug statement
   } else {
     alert('Please enter a valid Quickbase token.');
     return;

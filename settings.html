@@ -24,7 +24,7 @@
         alert('Please fill in both fields.');
         return;
       }
-      console.log('Saving settings:', { qcUrl: qcUrlInput, qbToken: qbTokenInput });  // Debug statement
+      console.log('Sending settings to parent:', { qcUrl: qcUrlInput, qbToken: qbTokenInput });  // Debug statement
       parent.postMessage({ action: 'saveSettings', qcUrl: qcUrlInput, qbToken: qbTokenInput }, '*');
     }
 
