@@ -209,11 +209,7 @@ function goToSettings() {
   settingsPage.classList.remove('hidden');
   mainContent.classList.add('hidden');
 
-  // Force DOM update
-  settingsPage.offsetHeight; // Trigger reflow
-  mainContent.offsetHeight; // Trigger reflow
-
-  // Log updated classes
+  // Check class list updates
   console.log('Updated settingsPage classList:', settingsPage.classList);
   console.log('Updated mainContent classList:', mainContent.classList);
 
@@ -261,11 +257,7 @@ function returnToMain() {
   settingsPage.classList.add('hidden');
   mainContent.classList.remove('hidden');
 
-  // Force DOM update
-  settingsPage.offsetHeight; // Trigger reflow
-  mainContent.offsetHeight; // Trigger reflow
-
-  // Log updated classes
+  // Check class list updates
   console.log('Updated settingsPage classList:', settingsPage.classList);
   console.log('Updated mainContent classList:', mainContent.classList);
 }
