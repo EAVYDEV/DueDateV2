@@ -8,6 +8,7 @@ function handleClientLoad() {
   console.log('Loading Quickbase client...');
   toggleLoadingSpinner(true);
   const qbToken = localStorage.getItem('qbToken');
+  console.log('Loaded Quickbase token:', qbToken);  // Debug statement
   if (qbToken) {
     quickbase = window.api.initializeQuickBase(qbToken);
     loadQuickbaseData();
@@ -216,6 +217,7 @@ function goToSettings() {
 }
 
 function saveSettings(qcUrl, qbToken) {
+  console.log('Saving settings in parent:', { qcUrl, qbToken });  // Debug statement
   if (isValidUrl(qcUrl)) {
     localStorage.setItem('qcUrl', qcUrl);
   } else {
@@ -261,6 +263,7 @@ function handleError(message, error) {
 
 window.addEventListener('message', (event) => {
   const { action, qcUrl, qbToken } = event.data;
+  console.log('Received message:', { action, qcUrl, qbToken });  // Debug statement
   if (action === 'saveSettings') {
     saveSettings(qcUrl, qbToken);
   } else if (action === 'returnToMain') {
