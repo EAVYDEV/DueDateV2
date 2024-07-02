@@ -33,6 +33,7 @@ async function loadQuickbaseData() {
       throw new Error('Quickbase client is not properly initialized.');
     }
 
+    console.log('Quickbase client initialized, making API call...');
     const response = await quickbase.api('API_DoQuery', {
       dbid: 'bfirp7cdp', // Replace with your table ID
       query: "{3.EX.'Value'}", // Adjust the query criteria as needed
