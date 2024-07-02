@@ -2,8 +2,10 @@ const { contextBridge } = require('electron');
 
 // Mock Quickbase API initialization for demonstration
 const initializeQuickBase = (token) => {
+  console.log('Initializing QuickBase with token:', token);
   return {
     api: (endpoint, options) => {
+      console.log('Calling QuickBase API:', endpoint, options);
       return new Promise((resolve, reject) => {
         // Mock API response for demonstration purposes
         if (endpoint === 'API_DoQuery') {
