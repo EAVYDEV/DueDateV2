@@ -5,7 +5,7 @@ const initializeQuickBase = (token) => {
   return {
     api: (endpoint, options) => {
       return new Promise((resolve, reject) => {
-        // Mock API response
+        // Mock API response for demonstration purposes
         if (endpoint === 'API_DoQuery') {
           resolve({
             data: [
