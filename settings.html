@@ -24,13 +24,25 @@
         alert('Please fill in both fields.');
         return;
       }
-      console.log('Sending settings to parent:', { qcUrl: qcUrlInput, qbToken: qbTokenInput });  // Debug statement
+      localStorage.setItem('qcUrl', qcUrlInput);
+      localStorage.setItem('qbToken', qbTokenInput);
       parent.postMessage({ action: 'saveSettings', qcUrl: qcUrlInput, qbToken: qbTokenInput }, '*');
     }
 
     function returnToMain() {
       parent.postMessage({ action: 'returnToMain' }, '*');
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedUrl = localStorage.getItem('qcUrl');
+      const savedToken = localStorage.getItem('qbToken');
+      if (savedUrl) {
+        document.getElementById('qc-url-input').value = savedUrl;
+      }
+      if (savedToken) {
+        document.getElementById('qb-token-input').value = savedToken;
+      }
+    });
   </script>
 </body>
 </html>

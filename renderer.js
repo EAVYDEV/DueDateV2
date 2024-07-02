@@ -115,7 +115,6 @@ function openLink(link, card) {
     historyIndex++;
     document.getElementById('iframe-container').innerHTML = `<iframe src="${link}"></iframe>`;
 
-    // Highlight the active card
     if (activeCard) {
       activeCard.classList.remove('active');
     }
@@ -298,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('search-input').addEventListener('input', filterProjects);
 });
 
-// Ensure toggleSettings is globally accessible
 window.toggleSettings = toggleSettings;
 
 function loadSheetData() {
